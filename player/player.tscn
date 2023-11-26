@@ -1,34 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmadjp8vdppas"]
+[gd_scene load_steps=4 format=3 uid="uid://dmadjp8vdppas"]
 
-[ext_resource type="Texture2D" uid="uid://wws6ewbs8k82" path="res://assets/tilemap-characters_packed.png" id="1_31gc4"]
 [ext_resource type="Script" path="res://player/player.gd" id="1_fopu0"]
+[ext_resource type="SpriteFrames" uid="uid://cfq1sg54e6sf7" path="res://player/player_green.tres" id="2_low7m"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wpn20"]
-atlas = ExtResource("1_31gc4")
-region = Rect2(0, 0, 24, 24)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_anmf1"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wpn20")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_djh0s"]
-radius = 6.0
-height = 16.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p0gg2"]
+size = Vector2(10, 16)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_fopu0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_anmf1")
-animation = &"idle"
+sprite_frames = ExtResource("2_low7m")
+animation = &"run"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
-shape = SubResource("CapsuleShape2D_djh0s")
+shape = SubResource("RectangleShape2D_p0gg2")
