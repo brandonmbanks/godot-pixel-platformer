@@ -9,15 +9,20 @@ extends CharacterBody2D
 @export var JUMP_FORCE: int = -140
 @export var JUMP_RELEASE_FORCE: int = -70
 @export var NUM_JUMPS: int = 2
+@export var SPRITE: SpriteFrames = load("res://player/player_green.tres")
+@export var CONTROLS: PlayerControls = load("res://player/p1_controls.tres")
 
 var jumps_remaining: int = NUM_JUMPS
+
+func _ready() -> void:
+	animated_sprite_2d.sprite_frames = SPRITE
 
 func _physics_process(_delta: float) -> void:
 	# constantly apply gravity
 	apply_gravity()
 	
 	var input = Vector2.ZERO
-	input.x = Input.get_axis("ui_left", "ui_right")
+	input.x = Input.get_axis(CONTROLS.move_left, CONTROLS.move_right)
 
 	# movement
 	if input.x == 0:
@@ -26,7 +31,7 @@ func _physics_process(_delta: float) -> void:
 		apply_acceleration(input.x)
 
 	# jump
-	if Input.is_action_just_pressed("ui_up") and jumps_remaining > 1:
+	if Input.is_action_just_pressed(CONTROLS.jump) and jumps_remaining > 1:
 		velocity.y = JUMP_FORCE
 		jumps_remaining -= 1
 
@@ -34,7 +39,7 @@ func _physics_process(_delta: float) -> void:
 		jumps_remaining = NUM_JUMPS
 	else:
 		animated_sprite_2d.play("jump")
-		if Input.is_action_just_released("ui_up") and velocity.y < JUMP_RELEASE_FORCE:
+		if Input.is_action_just_released(CONTROLS.jump) and velocity.y < JUMP_RELEASE_FORCE:
 			velocity.y = JUMP_RELEASE_FORCE
 		
 		if velocity.y > 0:
