@@ -1,10 +1,10 @@
-[gd_resource type="Resource" script_class="PlayerControls" load_steps=2 format=3 uid="uid://bnde4cr31ncer"]
+[gd_resource type="Resource" script_class="PlayerControls" load_steps=2 format=3 uid="uid://x7cjuf2x8jpf"]
 
-[ext_resource type="Script" path="res://player/player_controls.gd" id="1_upw45"]
+[ext_resource type="Script" path="res://player/player_controls.gd" id="1_j4v01"]
 
 [resource]
-script = ExtResource("1_upw45")
+script = ExtResource("1_j4v01")
 player_index = 0
-move_left = "p1_move_left"
-move_right = "p1_move_right"
-jump = "p1_jump"
+move_left = "p2_move_left"
+move_right = "p2_move_right"
+jump = "p2_jump"
