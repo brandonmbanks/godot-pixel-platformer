@@ -10,6 +10,8 @@ extends CharacterBody2D
 @export var JUMP_RELEASE_FORCE: int = -70
 @export var NUM_JUMPS: int = 2
 
+var jumps_remaining: int = NUM_JUMPS
+
 func _physics_process(delta: float) -> void:
 	# constantly apply gravity
 	apply_gravity()
@@ -30,17 +32,13 @@ func _physics_process(delta: float) -> void:
 		apply_acceleration(input.x)
 
 	# jump
-	# only allow jump if on floor
-	if is_on_floor():
-		NUM_JUMPS = 2
-		if Input.is_action_just_pressed("ui_up"):
-			velocity.y = JUMP_FORCE
-			NUM_JUMPS -= 1
-	else:
-		if Input.is_action_just_pressed("ui_up") and NUM_JUMPS > 0:
-			velocity.y = JUMP_FORCE
-			NUM_JUMPS -= 1
+	if Input.is_action_just_pressed("ui_up") and jumps_remaining > 1:
+		velocity.y = JUMP_FORCE
+		jumps_remaining -= 1
 
+	if is_on_floor():
+		jumps_remaining = NUM_JUMPS
+	else:
 		if Input.is_action_just_released("ui_up") and velocity.y < JUMP_RELEASE_FORCE:
 			velocity.y = JUMP_RELEASE_FORCE
 		
