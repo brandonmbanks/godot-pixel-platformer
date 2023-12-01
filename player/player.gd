@@ -13,6 +13,7 @@ extends CharacterBody2D
 @export var CONTROLS: PlayerControls = load("res://player/p1_controls.tres")
 
 var jumps_remaining: int = NUM_JUMPS
+var visible_on_screen: bool = true
 
 func _ready() -> void:
 	animated_sprite_2d.sprite_frames = SPRITE
@@ -70,3 +71,15 @@ func apply_acceleration(input_x: float):
 
 	animated_sprite_2d.play("run")
 	velocity.x = move_toward(velocity.x, MAX_SPEED * input_x, ACCELERATION)
+
+# very simple respawn
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	visible_on_screen = false
+	await get_tree().create_timer(1.0).timeout
+	if not visible_on_screen:
+		var viewport_size = get_viewport_rect().size
+		position.x = viewport_size.x/2
+		position.y = viewport_size.y/2
+
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	visible_on_screen = true
