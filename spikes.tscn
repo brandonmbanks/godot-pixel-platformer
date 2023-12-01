@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cws6ribfj44vi"]
+
+[ext_resource type="Texture2D" uid="uid://nh0n3uqsm3h5" path="res://assets/tilemap_packed.png" id="1_nu4rx"]
+[ext_resource type="PackedScene" uid="uid://bp41n2p3dwbgw" path="res://hitbox.tscn" id="2_jsgei"]
+
+[node name="Spikes" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -9)
+texture = ExtResource("1_nu4rx")
+region_enabled = true
+region_rect = Rect2(144, 54, 18, 18)
+
+[node name="Hitbox" parent="." instance=ExtResource("2_jsgei")]
+collision_layer = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Hitbox"]
+polygon = PackedVector2Array(-5, -7, -3, -7, -1, -3, 1, -3, 3, -7, 5, -7, 7, -3, 7, 0, -7, 0, -7, -3)
