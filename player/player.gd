@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -64,10 +65,7 @@ func apply_friction():
 
 func apply_acceleration(input_x: float):
 	# flip sprite direction
-	if input_x > 0:
-		animated_sprite_2d.flip_h = true
-	elif input_x < 0:
-		animated_sprite_2d.flip_h = false
+	animated_sprite_2d.flip_h = input_x > 0
 
 	animated_sprite_2d.play("run")
 	velocity.x = move_toward(velocity.x, MAX_SPEED * input_x, ACCELERATION)
@@ -77,9 +75,12 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	visible_on_screen = false
 	await get_tree().create_timer(1.0).timeout
 	if not visible_on_screen:
-		var viewport_size = get_viewport_rect().size
-		position.x = viewport_size.x/2
-		position.y = viewport_size.y/2
+		respawn()
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	visible_on_screen = true
+
+func respawn():
+	var viewport_size = get_viewport_rect().size
+	position.x = viewport_size.x/2
+	position.y = viewport_size.y/2
